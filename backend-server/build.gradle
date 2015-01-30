@@ -1,0 +1,12 @@
+dependencies {
+    compile 'org.apache.cxf:cxf-core:3.0.3'
+    compile 'org.apache.cxf:cxf-rt-transports-http:3.0.3'
+    compile 'org.apache.cxf:cxf-rt-frontend-jaxws:3.0.3'
+
+    compile 'org.springframework:spring-beans:' + springVersion
+
+    compile 'org.springframework.boot:spring-boot-starter-web:' + springBootVersion
+    compile 'org.springframework.boot:spring-boot-starter-tomcat:' + springBootVersion
+
+    compile project(':backend-api')
+}

@@ -1,0 +1,87 @@
+description = 'Workflow-Prototype'
+group = 'at.gv.brz.justiz3.prototypes'
+version = '0.0.1'
+
+ext {
+    springVersion = '4.0.7.RELEASE'
+    hibernateVersion = '4.3.1.Final'
+    hibernateValidatorVersion = '5.0.3.Final'
+    cpVersion = '3.1.143'
+    springBootVersion = '1.1.8.RELEASE'
+    springSecurityVersion = '3.2.5.RELEASE'
+    springDataCommonsVersion = '1.8.4.RELEASE'
+    springDataJpaVersion = '1.6.4.RELEASE'
+    guavaVersion = '16.0.1'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.1'
+}
+
+buildscript {
+    ext {
+        cpGradleVersion = '2.0-b2'
+        catGradleVersion = '2.0-b8'
+        springBootGradleVersion = "1.1.7.RELEASE"
+    }
+
+    repositories {
+        mavenCentral()
+        maven { url "http://repo.spring.io/milestone" }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+        jcenter()
+    }
+    dependencies {
+        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: springBootGradleVersion
+    }
+}
+
+subprojects { proj ->
+
+    apply plugin: 'idea'
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
+
+    repositories {
+        mavenCentral()
+        maven { url "http://repo.spring.io/milestone" }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    }
+
+    compileJava.options.encoding = 'UTF-8'
+    compileTestJava.options.encoding = 'UTF-8'
+
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+
+    configurations {
+        // causes build problems in intelliJ (something with namedParameter)
+        all*.exclude group: 'log4j', module: 'log4j'
+        // causes "java.lang.NoSuchMethodError: org.hamcrest.Matcher.describeMismatch" in intelliJ
+        all*.exclude group: 'org.mockito', module: 'mockito-all'
+
+        testOutput.extendsFrom (testCompile)
+    }
+
+    task jarTest (type: Jar, dependsOn: testClasses) {
+        from sourceSets.test.output
+        classifier = 'test'
+    }
+
+    artifacts {
+        testOutput jarTest
+    }
+
+    dependencies {
+        compile 'org.slf4j:slf4j-api:1.7.7'
+        testCompile 'junit:junit:4.11'
+        testCompile "org.assertj:assertj-core:1.6.1"
+        testCompile "org.hsqldb:hsqldb:2.3.1"
+        testCompile "org.mockito:mockito-core:1.9.5"
+        testCompile "org.springframework:spring-test:" + springVersion
+
+        testRuntime "org.slf4j:log4j-over-slf4j:1.7.5"
+        testRuntime "org.slf4j:jcl-over-slf4j:1.7.5"
+        testRuntime "ch.qos.logback:logback-classic:1.0.13"
+    }
+}

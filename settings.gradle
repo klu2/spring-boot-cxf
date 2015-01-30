@@ -1,0 +1,8 @@
+rootProject.name = 'spring-boot-cxf'
+
+include 'backend-api'
+
+include 'backend-server'
+
+include 'frontend-server'
+
