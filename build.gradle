@@ -1,5 +1,5 @@
-description = 'Workflow-Prototype'
-group = 'at.gv.brz.justiz3.prototypes'
+description = 'Spring-Boot-CXF'
+group = 'cc.catalysts.tutorials.prototypes'
 version = '0.0.1'
 
 ext {
