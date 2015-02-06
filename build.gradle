@@ -1,5 +1,5 @@
 description = 'Spring-Boot-CXF'
-group = 'cc.catalysts.tutorials.prototypes'
+group = 'cc.catalysts.tutorials'
 version = '0.0.1'
 
 ext {
